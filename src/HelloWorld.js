@@ -14,7 +14,9 @@ export class HelloWorld extends LitElement {
   static get properties() {
     return {
       title: { type: String },
+      status: { type: String },
       counter: { type: Number },
+      disabled: { type: Boolean },
     };
   }
 
@@ -26,19 +28,26 @@ export class HelloWorld extends LitElement {
 
   __increment() {
     this.counter += 1;
+    this.status = "Stat!";
+    this.disabled = false;
   }
 
   __decrement() {
     if(this.counter > 0){
       this.counter -= 1;
+      this.status = "State :(";
+    }
+    if(this.counter === 0){
+      this.disabled = true;
     }
   }
 
   render() {
     return html`
       <h2>${this.title} Nr. ${this.counter}!</h2>
+      <input type="text" value="Were Pen ${this.status}">
       <button @click=${this.__increment}>increment</button>
-      <button @click=${this.__decrement}>decrement</button>
+      <button @click=${this.__decrement} ?disabled=${this.disabled}>decrement</button>
     `;
   }
 }
